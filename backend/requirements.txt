@@ -1,0 +1,8 @@
+Django>=5.0
+djangorestframework
+django-cors-headers
+drf-spectacular
+channels[daphne]
+psycopg[binary]
+django-environ
+channels[daphne]
