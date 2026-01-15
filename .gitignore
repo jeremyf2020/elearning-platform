@@ -1,4 +1,16 @@
-venv/
-.env
+# Python / Django
 __pycache__/
-*.pyc
+*.py[cod]
+*$py.class
+venv/
+db.sqlite3
+.env
+
+# React / Node
+node_modules/
+dist/
+.DS_Store
+
+# IDEs
+.vscode/
+.idea/
