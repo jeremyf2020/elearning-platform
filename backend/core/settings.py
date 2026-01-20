@@ -24,6 +24,8 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'daphne', # for WebSockets
+    'core',
+    'users',
     'rest_framework',
     'corsheaders',
     'django.contrib.admin',
@@ -125,3 +127,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ALLOWED_ORIGINS = env.list("CORS_ALLOWED_ORIGINS")
 
 ASGI_APPLICATION = 'core.asgi.application'
+
+AUTH_USER_MODEL = 'users.CustomUser'

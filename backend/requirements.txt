@@ -6,3 +6,4 @@ channels[daphne]
 psycopg[binary]
 django-environ
 channels[daphne]
+Pillow
