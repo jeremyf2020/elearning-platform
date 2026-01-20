@@ -26,16 +26,17 @@ services:
       - db
       - redis
 
-  # 4. Frontend - React/Vite
+  # 4. Frontend - Vite
   frontend:
     build: ./frontend
     volumes:
       - ./frontend:/app
-      - /app/node_modules  # This protects local modules from being overwritten
+      # No node_modules mapping (as discussed before)
     ports:
-      - "5173:5173"
+      - "${PORT:-3000}:${PORT:-3000}" # Uses the variable from .env, defaults to 3000 if missing
+    env_file:
+      - .env  # <--- THIS IS THE KEY. It loads your root .env file.
     depends_on:
       - backend
-
 volumes:
   postgres_data:
