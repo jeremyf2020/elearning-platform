@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     'daphne', # for WebSockets
     'core',
     'users',
+    'chat',
     'rest_framework',
     'rest_framework.authtoken',  
     'corsheaders',
@@ -129,6 +130,14 @@ CORS_ALLOWED_ORIGINS = env.list("CORS_ALLOWED_ORIGINS")
 
 ASGI_APPLICATION = 'core.asgi.application'
 
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [(env('REDIS_HOST'), env.int('REDIS_PORT'))],
+        },
+    },
+}
 AUTH_USER_MODEL = 'users.CustomUser'
 
 # Django REST Framework Configuration
