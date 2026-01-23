@@ -1,38 +1,48 @@
 import { useState } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
-function Login({ setGlobalUser }) {
+function Login() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
+    const { login } = useAuth(); 
     const navigate = useNavigate();
 
     const handleLogin = async (e) => {
         e.preventDefault();
+        setError('');
         try {
-            const res = await axios.post('http://localhost:8000/api/login/', { username, password });
-
-            // Save token (usually to localStorage)
-            localStorage.setItem('token', res.data.token);
-            localStorage.setItem('username', res.data.username);
-
-            // Update global state
-            setGlobalUser(res.data.username);
-
-            // Redirect Home
-            navigate('/');
+            await login(username, password);
+            navigate('/'); 
         } catch (err) {
-            alert("Login failed!");
+            console.error("Login failed", err);
+            setError('Invalid username or password');
         }
     };
 
     return (
-        <div style={{ padding: '20px' }}>
+        <div style={{ padding: '20px', maxWidth: '400px', margin: '0 auto' }}>
             <h2>Sign In</h2>
-            <form onSubmit={handleLogin}>
-                <input placeholder="Username" onChange={e => setUsername(e.target.value)} /><br /><br />
-                <input type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} /><br /><br />
-                <button type="submit">Login</button>
+            {error && <p style={{ color: 'red' }}>{error}</p>}
+            
+            <form onSubmit={handleLogin} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                <input 
+                    placeholder="Username" 
+                    value={username}
+                    onChange={e => setUsername(e.target.value)} 
+                    style={{ padding: '8px' }}
+                />
+                <input 
+                    type="password" 
+                    placeholder="Password" 
+                    value={password}
+                    onChange={e => setPassword(e.target.value)} 
+                    style={{ padding: '8px' }}
+                />
+                <button type="submit" style={{ padding: '10px', background: '#646cff', color: 'white', border: 'none' }}>
+                    Login
+                </button>
             </form>
         </div>
     );

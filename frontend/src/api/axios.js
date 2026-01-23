@@ -1,16 +1,13 @@
 import axios from 'axios';
-import dotenv from 'dotenv';
-
-dotenv.config();
 
 const api = axios.create({
-    baseURL: `${process.env.REACT_APP_API_URL || 'http://localhost:8000/api/'}`,
+    // Vite uses import.meta.env.VITE_... variables
+    baseURL: `http://localhost:${import.meta.env.VITE_DJANGO_PORT}/api/`,
     headers: {
         'Content-Type': 'application/json',
     },
 });
 
-// Interceptor: Automatically add Token to headers if it exists
 api.interceptors.request.use(
     (config) => {
         const token = localStorage.getItem('token');
