@@ -25,6 +25,7 @@ services:
     depends_on:
       - db
       - redis
+    user: "${UID}:${GID}"
 
   # 4. Frontend - Vite
   frontend:
